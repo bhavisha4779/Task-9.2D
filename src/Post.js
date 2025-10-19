@@ -1,12 +1,5 @@
 import React, { useState } from "react";
-import { Controlled as CodeMirror } from "react-codemirror2";
 import ReactMarkdown from "react-markdown";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
-
-import "codemirror/lib/codemirror.css";
-import "codemirror/theme/material.css";
-import "codemirror/mode/javascript/javascript";
 
 export default function Post() {
   const [code, setCode] = useState("");
@@ -24,26 +17,40 @@ export default function Post() {
         boxShadow: "0 2px 12px rgba(0,0,0,0.1)",
       }}
     >
-      <h2 style={{ fontSize: "2.5rem", marginBottom: "25px", textAlign: "center" }}>
+      <h2
+        style={{
+          fontSize: "2.5rem",
+          marginBottom: "25px",
+          textAlign: "center",
+        }}
+      >
         Create a Post
       </h2>
 
-      {/* CODE EDITOR */}
+      {/* Code Input */}
       <h4 style={{ fontSize: "1.3rem", marginBottom: "10px" }}>Write Code:</h4>
-      <CodeMirror
+      <textarea
         value={code}
-        options={{
-          mode: "javascript",
-          theme: "material",
-          lineNumbers: true,
-          lineWrapping: true,
-        }}
-        onBeforeChange={(editor, data, value) => {
-          setCode(value);
+        onChange={(e) => setCode(e.target.value)}
+        placeholder="Type your code here..."
+        spellCheck={false}
+        style={{
+          width: "100%",
+          height: "300px",
+          padding: "12px",
+          fontSize: "14px",
+          fontFamily: "Consolas, Monaco, Courier New, monospace",
+          backgroundColor: "#263238",
+          color: "#ffffff",
+          borderRadius: "6px",
+          border: "1px solid #ccc",
+          resize: "vertical",
+          lineHeight: "1.5",
+          direction: "ltr",
         }}
       />
 
-      {/* MARKDOWN INPUT */}
+      {/* Markdown Input */}
       <h4 style={{ marginTop: "30px", fontSize: "1.3rem" }}>
         Write Description (Markdown):
       </h4>
@@ -62,10 +69,11 @@ export default function Post() {
           fontFamily: "inherit",
           resize: "vertical",
           boxSizing: "border-box",
+          direction: "ltr",
         }}
       />
 
-      {/* PREVIEW SECTION */}
+      {/* Markdown Preview */}
       <h3
         style={{
           marginTop: "40px",
@@ -78,21 +86,19 @@ export default function Post() {
         Preview:
       </h3>
 
-      {/* Markdown Preview */}
-      <div style={{ marginBottom: "30px", fontSize: "16px", lineHeight: "1.6" }}>
+      <div
+        style={{
+          direction: "ltr",
+          textAlign: "left",
+          marginBottom: "30px",
+          fontSize: "16px",
+          lineHeight: "1.6",
+        }}
+      >
         <ReactMarkdown>{markdown}</ReactMarkdown>
       </div>
-
-      {/* Code Preview with syntax highlighting */}
-      <SyntaxHighlighter
-        language="javascript"
-        style={oneDark}
-        showLineNumbers
-        wrapLines
-        customStyle={{ borderRadius: "8px", fontSize: "14px" }}
-      >
-        {code}
-      </SyntaxHighlighter>
     </div>
   );
 }
+
+
